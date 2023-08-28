@@ -1,1 +1,1 @@
-Monitor by Prometheus, Grafana, and JMX Promethues Exporter
+Monitoring by Prometheus, Grafana, and JMX Promethues Exporter
