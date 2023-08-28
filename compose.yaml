@@ -1,0 +1,23 @@
+services:
+  prometheus:
+    image: "prom/prometheus"
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    ports:
+      - "9090:9090"
+  jmx-exporter:
+    image: "tomcat:jdk8-jmx-exporter"
+    ports:
+      - "8080:8080"
+      - "8088:8088"
+    environment:
+      - JAVA_OPTS="-javaagent:/jmx_prometheus_javaagent-0.13.0.jar=8088:/prometheus-jmx-config.yaml"
+  grafana:
+    image: "grafana/grafana"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
+    ports:
+      - "3000:3000"
